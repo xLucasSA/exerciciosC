@@ -1,30 +1,38 @@
 #include <stdio.h>
-#include <ctype.h>
 
-int stringSize(char * frase) {   
+typedef struct {
+    int wordCount;
+    int charCount;
+} Result;
+
+Result stringSize(char frase[]) {   
     int count = 0;
-    int wordCout = 0;
-    printf("%c", frase[3]);
-    while (frase[count] != '\0' || frase[count] == '|') {
-                
-        if( isspace(frase[count]) ) {
+    int wordCout = 1;
+    Result res;
+
+    while (frase[count] != '\0') {
+
+        if(frase[count] == ' ') {
             wordCout++;
         }
-
         count++;
     }
 
-    return count;
+    res.wordCount = wordCout;
+    res.charCount = count - 1;
+
+    return res;
 }
 
 int main() {
     char frase[250];
 
     printf("Insira a frase a ser analizada: ");
-    scanf("%s", frase);
+    fgets(frase, sizeof(frase), stdin);
 
-    int size = stringSize(&frase);
+    Result result = stringSize(frase);
 
-    printf("%d", size);
+    printf("O número de palavras é: %d\n", result.wordCount);
+    printf("O número de caracteres é: %d\n", result.charCount);
     return 0;
 }
